@@ -28,11 +28,18 @@
 class Transition;
 class State {
   private:
-    friend class TuringMachine;
+    friend class TuringMachineReader;
     std::string id_;
     std::map<char, Transition*> transition_function_;
     bool final_state_;
-    
+    /**
+     * @brief Add a transition to the transition function of the State
+     * @param symbols
+     * @param destiny
+     */
+    void addTransition(char symbol, Transition* transition);
+    State(std::string id);
+  public:
     /**
      * @brief Return the transitions given a tape symbol and a stack symbol
      * @param tape_symbol
@@ -42,12 +49,12 @@ class State {
      */
     Transition* transitionFunction(char symbol);
     /**
-     * @brief Add a transition to the transition function of the State
-     * @param symbols
-     * @param destiny
+     * @brief Check if the current object is a final state
+     * 
+     * @return true 
+     * @return false 
      */
-    void addTransition(char symbol, Transition* transition);
-    State(std::string id);    
+    bool isFinalState();
 };
 
 

@@ -1,10 +1,11 @@
-#include "../include/TuringMachine.h"
+#include "../include/TuringMachineReader.h"
 #include <iostream>
 #include <fstream>
 
 int main(int argc, char* argv[]) {
   std::string file_name = argv[1];
-  TuringMachine automaton(file_name);
+  TuringMachineReader reader(file_name);
+  TuringMachine automaton = reader.generateTM();
   std::string input_file_name;
   if (argc > 2) input_file_name = argv[2];
   std::ifstream input_file(input_file_name);

@@ -29,3 +29,7 @@ Transition* State::transitionFunction(char symbol) {
   }
   return NULL;
 }
+
+bool State::isFinalState() {
+  return final_state_;
+}

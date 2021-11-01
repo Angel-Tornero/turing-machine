@@ -19,7 +19,7 @@
  */
 class Alphabet {
   private:
-    friend class TuringMachine;
+    friend class TuringMachineReader;
     std::set<char> symbols_;
   
   public:

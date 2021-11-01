@@ -24,6 +24,7 @@
  */
 class TuringMachine {
   private:
+    friend class TuringMachineReader;
     Alphabet* input_alphabet_;
     Alphabet* tape_alphabet_;
     char blank_symbol_;
@@ -34,31 +35,8 @@ class TuringMachine {
     Tape tape_;
     int head_;
 
-    /**
-     * @brief Parse the alphabet in the input file
-     * @param file
-     * @return set with the symbols of the alphabet
-     */
-    std::set<char> parseAlphabet(std::ifstream& file);
-    /**
-     * @brief Parse the transition function in the input file
-     * @param file
-     * @param state_map
-     */
-    void parseTransitionFunction(std::ifstream& file, std::map<std::string, State*>& state_map);
-    /**
-     * @brief Recursive function to recognize strings
-     * @param string
-     * @param current
-     * @param pushing_array
-     * @param trace
-     * @param output_file
-     * 
-     * @return bool
-     */
-
   public:
-    TuringMachine(std::string& file_name);
+    TuringMachine()=default;
     ~TuringMachine();
     /**
      * @brief Parse the automaton given an input file
