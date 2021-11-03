@@ -35,7 +35,7 @@ std::set<char> tokenizerToChar(std::string& s) {
     return set;
 }
 
-TuringMachine TuringMachineReader::generateTM() {
+void TuringMachineReader::generateTM(TuringMachine& turing_machine) {
   std::string temp_string;
   do {
     std::getline(input_file_, temp_string);
@@ -47,35 +47,34 @@ TuringMachine TuringMachineReader::generateTM() {
   for (auto element: states) {
     State* new_state = new State(element);
     state_map_[element] = new_state;
-    turing_machine_.Q_.insert(new_state);
+    turing_machine.Q_.insert(new_state);
   }
 
   //Alfabeto de entrada
-  turing_machine_.input_alphabet_ = new Alphabet(readAlphabet());
+  turing_machine.input_alphabet_ = new Alphabet(readAlphabet());
 
   //Alfabeto de cinta
-  turing_machine_.tape_alphabet_ = new Alphabet(readAlphabet());
+  turing_machine.tape_alphabet_ = new Alphabet(readAlphabet());
 
   //Estado inicial
   std::getline(input_file_, temp_string);
-  turing_machine_.initial_state_ = state_map_[temp_string];
+  turing_machine.initial_state_ = state_map_[temp_string];
 
   //Símbolo blanco
   std::getline(input_file_, temp_string);
-  turing_machine_.blank_symbol_ = temp_string[0];
-  turing_machine_.input_alphabet_->symbols_.insert(turing_machine_.blank_symbol_);
+  turing_machine.blank_symbol_ = temp_string[0];
+  turing_machine.input_alphabet_->symbols_.insert(turing_machine.blank_symbol_);
 
   //Conjunto F
   std::getline(input_file_, temp_string);
   std::set<std::string> final_states = tokenizerToString(temp_string);
   for (auto element: final_states) {
     state_map_[element]->final_state_ = true;
-    turing_machine_.F_.insert(state_map_[element]);
+    turing_machine.F_.insert(state_map_[element]);
   }
 
   //Funcion de transición
-  readTransitionFunction();
-  return turing_machine_;
+  readTransitionFunction(turing_machine);
 }
 
 std::set<char> TuringMachineReader::readAlphabet() {
@@ -85,20 +84,21 @@ std::set<char> TuringMachineReader::readAlphabet() {
   return alphabet;
 }
 
-void TuringMachineReader::readTransitionFunction() {
+void TuringMachineReader::readTransitionFunction(TuringMachine& turing_machine) {
   std::string temp, start_state, finish_state;
   char input_symbol, tape_symbol, movement;
   while (std::getline(input_file_, temp)) {
     std::istringstream iss(temp);
     iss >> start_state;
     iss >> tape_symbol;
-    if (!turing_machine_.tape_alphabet_->contain(tape_symbol)) throw "Caracter erróneo.";
+    if (!turing_machine.tape_alphabet_->contain(tape_symbol)) throw "Caracter erróneo.";
     iss >> finish_state;
     iss >> input_symbol;
-    if (!turing_machine_.input_alphabet_->contain(input_symbol)) throw "Caracter erróneo.";
+    if (!turing_machine.input_alphabet_->contain(input_symbol)) throw "Caracter erróneo.";
     iss >> movement;
     int move = ((movement == 'R')? RIGHT : LEFT);
     Transition* new_transition = new Transition(state_map_[start_state], tape_symbol, state_map_[finish_state], input_symbol, move);
+    turing_machine.delta_.insert(new_transition);
     state_map_[start_state]->addTransition(tape_symbol, new_transition);
   }
 }

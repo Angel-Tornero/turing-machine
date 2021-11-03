@@ -29,6 +29,7 @@ class Transition;
 class State {
   private:
     friend class TuringMachineReader;
+    friend class TuringMachine;
     std::string id_;
     std::map<char, Transition*> transition_function_;
     bool final_state_;

@@ -19,6 +19,7 @@
  */
 class Tape {
   private:
+    friend class TuringMachine;
     std::vector<char> tape_;
   public:
     Tape()=default;

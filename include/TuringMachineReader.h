@@ -19,7 +19,6 @@
 class TuringMachineReader {
   private:
     std::ifstream input_file_;
-    TuringMachine turing_machine_;
     std::map<std::string, State*> state_map_;
     /**
      * @brief Parse the alphabet in the input file
@@ -32,8 +31,9 @@ class TuringMachineReader {
      * @param file
      * @param state_map
      */
-    void readTransitionFunction();
+    void readTransitionFunction(TuringMachine&);
   public:
     TuringMachineReader(std::string& file_name);
-    TuringMachine generateTM();
+    ~TuringMachineReader()=default;
+    void generateTM(TuringMachine&);
 };

@@ -28,7 +28,7 @@ TuringMachine::~TuringMachine() {
 
 bool TuringMachine::exec(std::string string) {
   tape_ = Tape(string, blank_symbol_);
-  head_ = 10;
+  head_ = 3;  //primer caracter de la cadena, los 3 primeros son simbolo blanco
   State* current_state = initial_state_;
   while (!current_state->isFinalState()) {
     Transition* transition = current_state->transitionFunction(tape_[head_]);

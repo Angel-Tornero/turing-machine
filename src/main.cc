@@ -5,7 +5,8 @@
 int main(int argc, char* argv[]) {
   std::string file_name = argv[1];
   TuringMachineReader reader(file_name);
-  TuringMachine automaton = reader.generateTM();
+  TuringMachine turing_machine;
+  reader.generateTM(turing_machine);
   std::string input_file_name;
   if (argc > 2) input_file_name = argv[2];
   std::ifstream input_file(input_file_name);
@@ -15,7 +16,7 @@ int main(int argc, char* argv[]) {
     while (!input_file.eof()) {
       std::getline(input_file, input);
       std::cout << '-' << input << ": ";
-      std::cout << (automaton.exec(input)? "Si pertenece al lenguaje" : "No pertenece al lenguaje") << '\n';
+      std::cout << (turing_machine.exec(input)? "Si pertenece al lenguaje" : "No pertenece al lenguaje") << '\n';
     }
     std::cout << '\n';
     return 1;
@@ -25,8 +26,9 @@ int main(int argc, char* argv[]) {
     std::string string;
     std::cout << "> ";
     std::cin >> string;
+    if (string == "exit") return 0;
     input = string;
-    std::cout << (automaton.exec(input)? "Si pertenece al lenguaje" : "No pertenece al lenguaje") << "\n\n";
+    std::cout << (turing_machine.exec(input)? "Si pertenece al lenguaje" : "No pertenece al lenguaje") << "\n\n";
   }
   return 0;
 }

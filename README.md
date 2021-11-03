@@ -2,7 +2,7 @@
 
 - Máquina de Turing con escritura y movimientos simultáneos.
 - Máquina de Turing donde los únicos movimientos son izquierda (L) y derecha (R).
-- Máquina de Turing con cinta infinita en ambas direcciones.
+- Máquina de Turing con cinta infinita hacia la derecha.
 
 Ejecución:
 
